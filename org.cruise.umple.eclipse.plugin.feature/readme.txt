@@ -1,0 +1,2 @@
+How to compile through command line:
+java -jar <eclipse-installation-path>\plugins\org.eclipse.equinox.launcher_<version><qualifier>.jar -application org.eclipse.ant.core.antRunner -buildfile build.xml

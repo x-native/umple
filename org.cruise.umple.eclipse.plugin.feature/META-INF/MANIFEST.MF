@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Umple Feature
+Bundle-SymbolicName: org.cruise.umple.eclipse.plugin.feature;singleton:=true
+Bundle-Version: 1.24.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+ .
+
