@@ -1,0 +1,118 @@
+apply plugin: 'groovy'
+
+// #TODO_AH purpose?
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+	// #TODO get plugin to work
+    // compile files('./umple-gradle-plugin-latest.jar')
+}
+
+// Get all dependencies installed
+task bootstrap << {
+    println "bootstrap"
+}
+
+// Perform a first build to get umple related stuff installed 
+task firstBuild << {
+    println "First build"
+}
+
+// full build
+task fullBuild << {
+    println "full build"
+}
+
+// quick build
+task quickBuild << {
+	println "Running quick build"
+}
+
+// build only umple
+task buildUmple << {
+	println "Building Umple"
+}
+
+// build only umple eclipse plugin
+task buildUmpleEclipsePlugin << {
+	println "Building Eclipse Plugin"
+}
+
+// build only umplificator eclipse plugin
+task buildUmplificatorEclipsePlugin << {
+	println "Building Umplificator Eclipse Plugin"
+}
+
+// qaBuildingPage #TODO_AH figure out what this is
+task qaBuildingPage << {
+    println "Starting Build"
+}
+
+// qaLandingPage #TODO_AH figure out what this is
+task qaLandingPage << {
+    println "Creating a QA Landing Page"
+}
+
+// Turn *.ump code from Umple into *.java
+task umpleSelf << {
+    println "Umple Self"
+}
+
+// Compile *.java into byte code
+task compileUmple << {
+    println "compile Umple"
+}
+
+// Compile the all testbed programs against the latest umple.jar
+task testUmple << {
+    println "test Umple"
+}
+
+// Build (aka compile and test) all testbed programs against the latest umple.jar
+task buildTestbed << {
+    println "build Testbed"
+}
+
+// Compile all testbed programs against the latest umple.jar
+task compileTestbed << {
+    println "compile Testbed"
+}
+
+// Compile the Java testbed program against the latest umple.jar
+task compileJavaCode << {
+    println "compile Java"
+}
+
+// Compile the PHP testbed program against the latest umple.jar
+task compilePHPCode << {
+    println "compile PHP"
+}
+
+// Compile the Ruby testbed program against the latest umple.jar
+task compileRubyCode << {
+    println "compile Ruby"
+}
+
+// Test all testbed programs against the latest umple.jar
+task testTestbed << {
+    println "test Testbed"
+}
+
+// Test the Java testbed program against the latest umple.jar
+task testJava << {
+    println "test Java"
+}
+
+// Test the PHP testbed program against the latest umple.jar
+task testPHP << {
+    println "test PHP"
+}
+
+// Test the Ruby testbed program against the latest umple.jar
+task testRuby << {
+    println "test Ruby"
+}
