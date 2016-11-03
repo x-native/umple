@@ -1,16 +1,21 @@
 apply plugin: 'groovy'
 
-// #TODO_AH purpose?
+
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
-	// #TODO get plugin to work
-    // compile files('./umple-gradle-plugin-latest.jar')
+	compile gradleApi()
+	compile localGroovy()
+	// #TODO_AH get plugin to work
+	// compile files('./buildSrc/umple-gradle-plugin-0.0.0.jar')
+	// classpath group: 'cruise.umple', name: 'UmplePlugin', version: '0.0.0'
 }
+	
+// apply plugin: 'com.cruise.umple.gradle.plugin'
+// apply from: './buildSrc/umple-gradle-plugin-0.0.0.jar'
+
 
 // Get all dependencies installed
 task bootstrap << {
@@ -91,51 +96,116 @@ task compileUmple << {
 
 // Compile the all testbed programs against the latest umple.jar
 task testUmple << {
-    
-	
-	
+    // Do nothing, this will call testJava, testPHP, and testRuby
+	// as specified by the multiple "dependsOn" at the bottom
 }
 
 // Compile the Java testbed program against the latest umple.jar
-task compileJavaCode << {
-    
+task compileUmpleToJava << {
+	def compileUmpleToJavaSucceeded = true
+
+	// #TODO_AH implement java compile
 	
-	
+	println ""
+	if(compileUmpleToJavaSucceeded)
+	{
+		println " compileUmpleToJava succeeded"
+	}
+	else
+	{
+		println " compileUmpleToJava failed"
+	}
+	println ""
 }
 
 // Compile the PHP testbed program against the latest umple.jar
-task compilePHPCode << {
-    
+task compileUmpleToPHP << {
+	def compileUmpleToPHPSucceeded = true
+
+	// #TODO_AH implement php compile
 	
-	
+	println ""
+	if(compileUmpleToPHPSucceeded)
+	{
+		println " compileUmpleToPHP succeeded"
+	}
+	else
+	{
+		println " compileUmpleToPHP failed"
+	}
+	println ""
 }
 
 // Compile the Ruby testbed program against the latest umple.jar
-task compileRubyCode << {
-    
+task compileUmpleToRuby << {
+	def compileUmpleToRubySucceeded = true
+
+	// #TODO_AH implement ruby compile
 	
-	
+	println ""
+	if(compileUmpleToRubySucceeded)
+	{
+		println " compileUmpleToRuby succeeded"
+	}
+	else
+	{
+		println " compileUmpleToRuby failed"
+	}
+	println ""
 }
 
 // Test the Java testbed program against the latest umple.jar
-task testJava(dependsOn: 'compileJavaCode') << {
-   
+task testJava(dependsOn: 'compileUmpleToJava') << {
+	def testJavaSucceeded = true
 
-   
+	// #TODO_AH implement Java test
+	
+	println ""
+	if(testJavaSucceeded)
+	{
+		println " testJava succeeded"
+	}
+	else
+	{
+		println " testPHP failed"
+	}
+	println ""
 }
 
 // Test the PHP testbed program against the latest umple.jar
-task testPHP(dependsOn: 'compilePHPCode') << {
-   
+task testPHP(dependsOn: 'compileUmpleToPHP') << {
+	def testPHPSucceeded = true
 
-   
+	// #TODO_AH implement PHP test
+	
+	println ""
+	if(testPHPSucceeded)
+	{
+		println " testPHP succeeded"
+	}
+	else
+	{
+		println " testPHP failed"
+	}
+	println ""
 }
 
 // Test the Ruby testbed program against the latest umple.jar
-task testRuby(dependsOn: 'compileRubyCode') << {
-   
+task testRuby(dependsOn: 'compileUmpleToRuby') << {
+	def testRubySucceeded = true
 
-   
+	// #TODO_AH implement ruby test
+	
+	println ""
+	if(testRubySucceeded)
+	{
+		println " testRuby succeeded"
+	}
+	else
+	{
+		println " testRuby failed"
+	}
+	println ""
 }
 
 // order matters, dependencies need to be specified after task declaration/definition
