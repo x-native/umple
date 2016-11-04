@@ -12,6 +12,20 @@ dependencies {
     // compile files('./umple-gradle-plugin-latest.jar')
 }
 
+buildscript {
+    repositories {
+        maven {
+            url uri('./')
+        }
+    }
+    dependencies {
+	// #TODO_AH seems wrong, expects the plugin jar in a strange location
+        classpath group: 'cruise.umple', name: 'UmpleGradlePlugin',
+                  version: '0.0.0'
+    }
+}
+apply plugin: 'UmplePlugin'
+
 // Get all dependencies installed
 task bootstrap << {
     
