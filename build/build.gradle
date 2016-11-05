@@ -19,14 +19,11 @@ dependencies {
 
 buildscript {
     repositories {
-        maven {
-            url uri('./')
-        }
+		flatDir dirs: "./libs"
     }
     dependencies {
 	// #TODO_AH seems wrong, expects the plugin jar in a strange location
-        classpath group: 'cruise.umple', name: 'UmpleGradlePlugin',
-                  version: '0.0.0'
+        classpath group: 'cruise.umple', name: 'UmpleGradlePlugin', version: '0.0.0'
     }
 }
 apply plugin: 'UmplePlugin'
