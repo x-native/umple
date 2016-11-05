@@ -8,25 +8,18 @@ repositories {
 dependencies {
 	compile gradleApi()
 	compile localGroovy()
-	// #TODO_AH get plugin to work
-	// compile files('./buildSrc/umple-gradle-plugin-0.0.0.jar')
-	// classpath group: 'cruise.umple', name: 'UmplePlugin', version: '0.0.0'
 }
-	
-// apply plugin: 'com.cruise.umple.gradle.plugin'
-// apply from: './buildSrc/umple-gradle-plugin-0.0.0.jar'
-
 
 buildscript {
     repositories {
 		flatDir dirs: "./libs"
     }
     dependencies {
-	// #TODO_AH seems wrong, expects the plugin jar in a strange location
-        classpath group: 'cruise.umple', name: 'UmpleGradlePlugin', version: '0.0.0'
+        classpath group: 'com.cruise.umple.gradle', name: 'UmpleGradlePlugin', version: '0.0.0'
     }
 }
-apply plugin: 'UmplePlugin'
+
+apply plugin: 'com.cruise.umple.gradle'
 
 // Get all dependencies installed
 task bootstrap << {
