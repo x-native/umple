@@ -17,8 +17,8 @@ buildscript {
 		jcenter()
     }
     dependencies {
-		classpath files('../../libs/umple-latest.jar')
-		classpath group: 'cruise.umple', name: 'UmpleGradlePlugin',  version: '0.0.0'
+		classpath files('../../libs/umple.jar')
+		classpath group: 'cruise.umple', name: 'UmpleGradlePlugin',  version: '0.0.1'
 		classpath 'de.undercouch:gradle-download-task:3.1.2'
     }
 }
