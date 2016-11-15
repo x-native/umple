@@ -11,14 +11,14 @@ dependencies {
 
 buildscript {
     repositories {
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
+        maven {
+            url uri('../../libs')
+        }
 		jcenter()
     }
     dependencies {
 		classpath files('../../libs/umple.jar')
-		classpath "gradle.plugin.cruise.umple:UmpleGradlePlugin:0.0.1"
+		classpath group: 'cruise.umple', name: 'UmpleGradlePlugin',  version: '0.0.3'
 		classpath 'de.undercouch:gradle-download-task:3.1.2'
     }
 }
