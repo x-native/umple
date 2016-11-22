@@ -28,6 +28,14 @@ apply plugin: 'de.undercouch.download'
 
 import de.undercouch.gradle.tasks.download.Download
 
+
+// set project properties for umple plugin
+project.ext.set("umpleFileName", "test.ump")
+assert project.umpleFileName == "test.ump"
+
+project.ext.set("languageToGenerate", "Java")
+assert project.languageToGenerate == "Java"
+
 // Downloads the latest stable umple jar
 task downloadUmpleJar(type: Download) {
     src 'http://cruise.eecs.uottawa.ca/umpleonline/scripts/umple.jar'
