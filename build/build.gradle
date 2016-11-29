@@ -27,6 +27,8 @@ apply plugin: 'umple.gradle.plugin'
 apply plugin: 'de.undercouch.download'
 
 import de.undercouch.gradle.tasks.download.Download
+import org.gradle.api.GradleException
+
 
 // downloads the umple jar only if the online version is newer
 download {
@@ -132,16 +134,14 @@ task compileUmpleToJava << {
 
 	// #TODO_AH implement java compile
 	
-	println ""
 	if(compileUmpleToJavaSucceeded)
 	{
-		println " compileUmpleToJava succeeded"
+
 	}
 	else
 	{
-		println " compileUmpleToJava failed"
+		throw new GradleException("compileUmpleToJava failed")
 	}
-	println ""
 }
 
 // Compile the PHP testbed program against the latest umple.jar
@@ -150,16 +150,14 @@ task compileUmpleToPHP << {
 
 	// #TODO_AH implement php compile
 	
-	println ""
 	if(compileUmpleToPHPSucceeded)
 	{
-		println " compileUmpleToPHP succeeded"
+
 	}
 	else
 	{
-		println " compileUmpleToPHP failed"
+		throw new GradleException("compileUmpleToPHP failed")
 	}
-	println ""
 }
 
 // Compile the Ruby testbed program against the latest umple.jar
@@ -167,17 +165,15 @@ task compileUmpleToRuby << {
 	def compileUmpleToRubySucceeded = true
 
 	// #TODO_AH implement ruby compile
-	
-	println ""
+
 	if(compileUmpleToRubySucceeded)
 	{
-		println " compileUmpleToRuby succeeded"
+
 	}
 	else
 	{
-		println " compileUmpleToRuby failed"
+		throw new GradleException("compileUmpleToRuby failed")
 	}
-	println ""
 }
 
 // Test the Java testbed program against the latest umple.jar
@@ -186,16 +182,14 @@ task testJava(dependsOn: 'compileUmpleToJava') << {
 
 	// #TODO_AH implement Java test
 	
-	println ""
 	if(testJavaSucceeded)
 	{
 		println " testJava succeeded"
 	}
 	else
 	{
-		println " testPHP failed"
+		throw new GradleException("testJava failed")
 	}
-	println ""
 }
 
 // Test the PHP testbed program against the latest umple.jar
@@ -204,16 +198,14 @@ task testPHP(dependsOn: 'compileUmpleToPHP') << {
 
 	// #TODO_AH implement PHP test
 	
-	println ""
 	if(testPHPSucceeded)
 	{
-		println " testPHP succeeded"
+		
 	}
 	else
 	{
-		println " testPHP failed"
+		throw new GradleException("testPHP failed")
 	}
-	println ""
 }
 
 // Test the Ruby testbed program against the latest umple.jar
@@ -222,16 +214,14 @@ task testRuby(dependsOn: 'compileUmpleToRuby') << {
 
 	// #TODO_AH implement ruby test
 	
-	println ""
 	if(testRubySucceeded)
 	{
-		println " testRuby succeeded"
+		
 	}
 	else
 	{
-		println " testRuby failed"
+		throw new GradleException("testRuby failed")
 	}
-	println ""
 }
 
 // order matters, dependencies need to be specified after task declaration/definition
