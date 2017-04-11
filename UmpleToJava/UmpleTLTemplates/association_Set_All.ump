@@ -102,7 +102,7 @@ class UmpleToJava {
           ng.getAssociationCode_specialization_reqSuperCode(gen, includeFile, includeFile2, includeFile3, realSb, av, relatedAssociation, 
           				 customSetPrefixCode,  customSetPostfixCode,  customAddPrefixCode,  customAddPostfixCode,  customRemovePrefixCode,  customRemovePostfixCode,
   						 customSetManyPrefixCode,  customSetManyPostfixCode, traceItemAssocRemoves, traceItemAssocAdds, uClass, sortMethodAdded, umpleSourceFile, 
-  						 this.uncaughtExceptions, globalUmpleClass, addNewLine, mulChangedToOne, relMulChangedToOne, mulChangedToN, reqSetCode, relReqCommonCode, relReqSetCode, scName);
+  						 this.uncaughtExceptions, globalUmpleClass, addNewLine, mulChangedToOne, relMulChangedToOne, mulChangedToN, reqSetCode, relReqCommonCode, relReqSetCode, scName, model);
     		
     }
 
@@ -111,7 +111,7 @@ class UmpleToJava {
           ng.getAssociationCode_specialization_reqCommonCode(gen, includeFile, includeFile2, includeFile3, realSb, av, relatedAssociation,
           				 customSetPrefixCode,  customSetPostfixCode,  customAddPrefixCode,  customAddPostfixCode,  customRemovePrefixCode,  customRemovePostfixCode,
   						 customSetManyPrefixCode,  customSetManyPostfixCode, traceItemAssocRemoves, traceItemAssocAdds, uClass, sortMethodAdded, umpleSourceFile, 
-  						 this.uncaughtExceptions, globalUmpleClass, addNewLine, mulChangedToOne, relMulChangedToOne, mulChangedToN, reqSetCode, relReqCommonCode, relReqSetCode, scName);
+  						 this.uncaughtExceptions, globalUmpleClass, addNewLine, mulChangedToOne, relMulChangedToOne, mulChangedToN, reqSetCode, relReqCommonCode, relReqSetCode, scName, model);
           
     } 
     

@@ -32,6 +32,8 @@ public class TemplateTest
   public String aTracer;
   public String tracerPath;
 
+  public boolean debug;
+
   @Before
   public void setUp()
   {
@@ -43,6 +45,7 @@ public class TemplateTest
     umpleParserName = "cruise.umple.compiler.UmpleInternalParser";
     aTracer = null;
     tracerPath = null;
+    debug = false;
   }
 
   @After
@@ -367,7 +370,10 @@ public class TemplateTest
     }
 
     File expected = new File(pathToInput, codeFile);
-    System.out.println(actual);
+    if (!debug)
+    {
+    	System.out.println(actual);
+    }
 
 
     if (isFullMatch)
@@ -389,6 +395,7 @@ public class TemplateTest
   {
     File file = new File(pathToInput, filename);
     UmpleModel model = new UmpleModel(new UmpleFile(pathToInput, filename));
+    model.setDebugMode(debug);
     model.setShouldGenerate(false);
     if( aTracer != null )
     	model.setTracer(new TracerDirective(aTracer));
