@@ -56,7 +56,7 @@ class UmpleInternalParser
   internal const String LESS_THAN = "smallerOp";
   internal const String OP = "Op";
   internal const String OPERATOR = "operator";
-  private static final String STATIC = "STATIC";
+  internal const String STATIC = "STATIC";
   
   // Allow to declare several active objects within the same class, the name of the generated state-machine
   // will be "stateMachine<numberOfActiveObjects>"
