@@ -27,7 +27,7 @@ class UmpleInternalParser
   //------------------------
   // CONSTANTS
   //------------------------
-  private static final String GUARD = "guard";
+  internal const String GUARD = "guard";
   private static final String LONE_BOOLEAN = "loneBoolean";
   private static final String CONSTRAINT_BODY = "constraintBody";
   private static final String LINKING_OP_BODY = "linkingOpBody";
