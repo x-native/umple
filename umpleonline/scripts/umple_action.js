@@ -189,6 +189,10 @@ Action.clicked = function(event)
   {
     Action.toggleMethods();
   }
+  else if (action == "ToggleAutogenMethods")
+  {
+    Action.toggleAutogenMethods();
+  }
   else if (action == "ToggleActions")
   {
     Action.toggleActions();
@@ -1828,6 +1832,12 @@ Action.toggleMethods = function()
   Action.redrawDiagram();
 }
 
+Action.toggleAutogenMethods = function()
+{
+  Page.showAutogenMethods = !Page.showAutogenMethods;
+  Action.redrawDiagram();
+}
+
 Action.toggleActions = function()
 {
   Page.showActions = !Page.showActions;
@@ -2296,6 +2306,7 @@ Action.getLanguage = function()
   // append any suboptions needed for GvClassDiagram
   if(Page.useGvClassDiagram) { 
     if(Page.showMethods) language=language+".showmethods";
+    if(Page.showAutogenMethods) language=language+".showautogenmethods";
     if(!Page.showAttributes) language=language+".hideattributes";
   }
   return language;

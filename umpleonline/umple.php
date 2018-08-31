@@ -224,6 +224,8 @@ $output = $dataHandle->readData('model.ump');
       title="Show/hide attributes in class diagrams - ctrl-A">A</a>&nbsp;
     <a class="button2" href="javascript:Page.clickToggleMethods()"
       title="Show/hide methods in class diagrams - ctrl-M">M</a>&nbsp;
+    <a class="button2" href="javascript:Page.clickToggleAutogenMethods()"
+      title="Show/hide auto-generated methods in class diagrams">GM</a>&nbsp;
     </span>
 
 
@@ -486,6 +488,10 @@ $output = $dataHandle->readData('model.ump');
             <li id="ttToggleMethods" class="layoutListItem"> 
               <input id="buttonToggleMethods" class="checkbox" type="checkbox"/> 
               <a id="labelToggleMethods" class="buttonExtend">Methods</a>
+            </li>
+            <li id="ttToggleAutogenMethods" class="layoutListItem"> 
+              <input id="buttonToggleAutogenMethods" class="checkbox" type="checkbox"/> 
+              <a id="labelToggleAutogenMethods" class="buttonExtend">Generated Methods</a>
             </li>
             <li id="ttToggleActions" class="layoutListItem"> 
               <input id="buttonToggleActions" class="checkbox" type="checkbox"/> 

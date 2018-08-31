@@ -33,6 +33,7 @@ Page.useGvStateDiagram = false;
 Page.useStructureDiagram = false;
 Page.showAttributes = true;
 Page.showMethods = false;
+Page.showAutogenMethods = false;
 Page.showActions = true;
 Page.showTraits = false;
 Page.showTransitionLabels = false;
