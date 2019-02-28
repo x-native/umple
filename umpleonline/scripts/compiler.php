@@ -319,7 +319,7 @@ else if (isset($_REQUEST["umpleCode"]))
   $sourceCode = str_replace("?>","",$sourceCode);
   $sourceCode = htmlspecialchars($sourceCode);
   
-  $errhtml = getErrorHtml($errorFilename);
+  $errhtml = getErrorHtml($errorFilename,0);
   
   if ($sourceCode == "")
   {
@@ -336,8 +336,9 @@ else if (isset($_REQUEST["umpleCode"]))
         If the problem persists, please email the Umple code to
         the umple-help google group: umple-help@googlegroups.com";
     }
-    echo $errhtml ."<p>URL_SPLIT" . $html;
-    
+   // echo $errhtml ."<p>URL_SPLIT" . $html;
+    echo $errhtml ;
+
   }
   else
   {
