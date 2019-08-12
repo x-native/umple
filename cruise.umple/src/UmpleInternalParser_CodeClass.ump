@@ -5486,7 +5486,7 @@ private Boolean checkIsDistributed(UmpleInterface uInterface)
 
         } else {
             if (!resetClass && !currentNameSpace.equals("-") && !currentNameSpace.equals(currentPackageName) && !redefinePackageName.equals("-")){
-              setFailedPosition(t1.getPosition(),31,currentNameSpace,currentPackageName);
+              //setFailedPosition(t1.getPosition(),31,currentNameSpace,currentPackageName);
               continue;
             }
         }
@@ -5521,5 +5521,51 @@ private Boolean checkIsDistributed(UmpleInterface uInterface)
 //      return extraNamespace;
 //    }
   }
-  
+ 
+  private void namespacesCheck() {
+    Token rootToken = getRootToken();
+    String lastNamespace = "";
+    String currentNamespace = "";
+    String className = "";
+    boolean lastTokenNamespace = false;
+
+    for(Token t : rootToken.getSubTokens())
+    {
+      if (t.is("namespace"))
+        {
+          if(!t.getValue().equals("-"))
+          {
+          lastNamespace = currentNamespace;
+          currentNamespace = t.getValue();
+          if (lastTokenNamespace) //!currentNameSpace.equals("-") && !currentNameSpace.equals(currentPackageName) && !redefinePackageName.equals("-")
+            {
+              //System.out.println("31 : currentNamespace: "+currentNamespace+ " | lastNamespace : "+lastNamespace);
+
+              setFailedPosition(t.getPosition(),31,lastNamespace,currentNamespace);
+            }
+          lastTokenNamespace = true;
+          }
+        }
+      else if (t.is("classDefinition"))
+        {
+          className = t.getValue("name").split(" ")[t.getValue("name").split(" ").length-1];
+
+          for(UmpleClass aClass : model.getUmpleClasses())
+            {
+              
+              if(aClass.getName().equals(className) && !currentNamespace.equals(aClass.getPackageName()))
+                {
+                  lastTokenNamespace = false;
+                  //System.out.println("class: "+aClass.getName()+ " | PackageName : "+aClass.getPackageName());
+                }
+            }
+        }
+
+      if (!getParseResult().getWasSuccess())
+      {
+        return;
+      }
+    }
+  }
+
 } 

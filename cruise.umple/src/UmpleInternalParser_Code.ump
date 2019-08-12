@@ -226,6 +226,7 @@ class UmpleInternalParser
       }
     }
     while (shouldProcessAgain);
+    namespacesCheck();
   }
 
   // Delegate function to analyze a token within the context of a class
