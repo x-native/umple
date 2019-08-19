@@ -2,6 +2,35 @@ class UmpleToPhp {
     class_MethodDeclaration <<!<</*class_MethodDeclaration*/>><<#
     if (uClass.hasMethods())
     {
+      // Issue 834 Fix: Prevent default implmentation of interface methods when already implemented by other mechanisms
+      List<Method> duplicateInterfaceMethods = new ArrayList<Method>();
+
+      for (Method aMethod : uClass.getMethods()) 
+      {
+        boolean implementsInterfaceMethod = false;
+        for (UmpleInterface uInterface : uClass.getParentInterface())
+        {
+          for (Method m : uInterface.getMethods())
+          {
+            if (m.compareWithTheMethod(aMethod) && m.getIsImplemented())
+            {
+              duplicateInterfaceMethods.add(m);
+              implementsInterfaceMethod = true;
+              break;
+            }
+          } 
+          if (implementsInterfaceMethod)
+          {
+            break;
+          }
+        }
+      }
+      for(Method m : duplicateInterfaceMethods)
+      {
+        uClass.removeMethod(m);
+      }
+      duplicateInterfaceMethods = null;
+      
         // method parameters of primitives should not explicitly list the parameter type
         // ex: function f($a){} and not f(integer $a){}
         List<String> primitives = Arrays.asList("string", "boolean", "integer", "float", "double", 

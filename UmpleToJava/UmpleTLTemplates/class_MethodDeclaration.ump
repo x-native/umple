@@ -4,30 +4,38 @@ class UmpleToJava {
     if (uClass.hasMethods())
     {
       boolean hasQueued = false;
+      
+      // Issue 834 Fix: Prevent default implmentation of interface methods when already implemented by other mechanisms
+      List<Method> duplicateInterfaceMethods = new ArrayList<Method>();
+
       for (Method aMethod : uClass.getMethods()) 
       {
-
-        // Issue 834 Fix: Prevent default implmentation of interface methods when a state machine implements them
         boolean implementsInterfaceMethod = false;
         for (UmpleInterface uInterface : uClass.getParentInterface())
         {
           for (Method m : uInterface.getMethods())
           {
-            Method classMethod = new Method("",aMethod.getName(),aMethod.getType().toLowerCase(),false);
-            classMethod.setMethodParameters(aMethod.getParams());
-            if (m.compareWithTheMethod(classMethod))
+            if (m.compareWithTheMethod(aMethod) && m.getIsImplemented())
             {
-              uClass.removeMethod(m);
+              duplicateInterfaceMethods.add(m);
               implementsInterfaceMethod = true;
               break;
             }
-          }
-          
+          } 
           if (implementsInterfaceMethod)
           {
             break;
           }
         }
+      }
+      for(Method m : duplicateInterfaceMethods)
+      {
+        uClass.removeMethod(m);
+      }
+      duplicateInterfaceMethods = null;
+
+      for (Method aMethod : uClass.getMethods()) 
+      {
 
         List<TraceItem> traceItems= aMethod.getTraced("method",uClass);
         
