@@ -57,11 +57,11 @@ class GvClassDiagramGenerator
           (uClass.getMethods().size() == 0 || !hasSuboption("showmethods")) 
           && !uClass.getIsAbstract()) {
 	    code.append("<<table border=\"1\" cellspacing=\"0\" cellborder=\"0\" cellpadding=\"10\">"
-		   			+"<tr><td>    "+className+"    </td></tr>");
+		   			+"<tr><td>    "+className+"   </td></tr>");
       }
       else {
         code.append("<<table border=\"1\" cellspacing=\"0\" cellborder=\"0\" cellpadding=\"2\">"
-                    +"<tr><td cellpadding=\"4\">    "+className+"    </td></tr>");
+                    +"<tr><td cellpadding=\"4\">    "+className+"   </td></tr>");
 		  }
       if(uClass.getIsAbstract()) {  // add abstract tag
         code.append("<tr><td cellpadding=\"4\">&laquo;abstract&raquo;"+"</td></tr>");
@@ -114,7 +114,7 @@ class GvClassDiagramGenerator
             attrTooltip.append(appendTooltipComment(uAttribute.getComments(), true));        
             code.append("<tr><td align=\"left\" href=\"\" title=\""+attrTooltip+"\">"
                   +"  "+uAttribute.getName()+" : "
-                  +type+isList+"  </td></tr>");
+                  +type+isList+" </td></tr>");
           }
           
           isFirst = false;
@@ -167,7 +167,7 @@ class GvClassDiagramGenerator
         }
         else {
           StringBuilder methTooltip = new StringBuilder();
-          methTooltip.append(type+" "+uMethod.getName()+"("+parameters+")"+"&#13;");
+          methTooltip.append(type+"insert one "+uMethod.getName()+"("+parameters+")"+"&#13;");
           methTooltip.append(appendTooltipComment(uMethod.getComments(), true));
       
           StringBuilder hrefString = new StringBuilder();
@@ -177,12 +177,12 @@ class GvClassDiagramGenerator
           if (isAbstract) {
             code.append("<tr><td align=\"left\" href=\""+hrefString+"\" title=\""+methTooltip+"\">"
                 +"  "+accessModifier+ "<I>" + uMethod.getName() + "</I>" 
-                +" ("+parameters+") : "+type+"  </td></tr>");
+                +" ("+parameters+") : "+type+" </td></tr>");
           }
           else {
             code.append("<tr><td align=\"left\" href=\""+hrefString+"\" title=\""+methTooltip+"\">"
               +"  "+accessModifier+uMethod.getName()
-              +"("+parameters+") : "+type+"  </td></tr>");  
+              +"("+parameters+") : "+type+" </td></tr>");  
           }
           isFirstMethod = false;
         }
@@ -226,9 +226,9 @@ class GvClassDiagramGenerator
         if ("undefined".equals(rightEnd.getDisplayRoleName()))
           label = leftEnd.toSimpleString()+" "+leftEnd.getDisplayRoleName();
         else label = rightEnd.toSimpleString()+" "+rightEnd.getDisplayRoleName();
-          
-        toolTip = leftEnd.getClassName() + " " + label + " " + rightEnd.getClassName();
-          
+          // Insert Probe
+        //toolTip = leftEnd.getClassName() + " " + label + " " + rightEnd.getClassName();
+        toolTip = "leftEnd.getClassName" + leftEnd.getClassName() + " " + "label" + label + " " + "rightEnd.getClassName" + rightEnd.getClassName()+ "My add Arrow" + arrows[0];
         associations.append(labelAssociation(leftEnd.getClassName(),
           rightEnd.getClassName(), arrows[0], label, toolTip));
       }
@@ -236,9 +236,95 @@ class GvClassDiagramGenerator
       {
         visualLeftEnd = leftEnd.toSimpleString()+" "+leftEnd.getDisplayRoleName();
         visualRightEnd = rightEnd.toSimpleString()+" "+rightEnd.getDisplayRoleName();
-        toolTip = leftEnd.getClassName() + " " + visualLeftEnd +
-            " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName();
-          
+         // Insert Probe
+         String VLE = visualLeftEnd;
+		String VRE = visualRightEnd;
+		String LLBCadChar ="";
+		String LUBCadstring="";
+		String RLBCadChar ="";
+		String RUBCadstring="";
+		String FirstClassName = leftEnd.getClassName();
+		String SecondClassName = rightEnd.getClassName();
+		if (VLE.length() == 1) {
+					
+			if (VLE.equals("*")) {
+				LUBCadstring =  SecondClassName + " has " + FirstClassName + ". It can have none, and there is no upper bound defined. ";
+				toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring;
+			} else
+				{Integer IntVLE = Integer.valueOf(VLE);
+				if (IntVLE  >= 1 ) {
+					LUBCadstring = SecondClassName + " has " + FirstClassName + ".It must always have exactly " + IntVLE + ", and can never have none.";
+					toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring;
+				}
+				
+			}
+		} else {
+			char firstVLE = VLE.charAt(0);
+			int intfirstVLE = Character.getNumericValue(firstVLE);
+			if (intfirstVLE == 0) {
+				LUBCadstring =  SecondClassName +  " has zero or one " +  FirstClassName + ". It may have none. ";	
+				toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring;
+			} else if (intfirstVLE >= 1) {
+				LUBCadstring =  SecondClassName +  " has " +  FirstClassName + ". It must always have exactly " + intfirstVLE + ", and can never have none. ";
+				toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring;	
+			}		
+			
+			if (VLE.endsWith("*")) {
+				LUBCadstring = SecondClassName +  " has " +  FirstClassName + ". It can have none, and there is no upper bound defined.";
+				toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring;
+			} else {
+				Integer IntVLElastIndex = Integer.valueOf(VLE.substring(VLE.length()-1) );
+				if (IntVLElastIndex >=1) {
+					LUBCadstring = SecondClassName +  " has "+  FirstClassName + ", It can have " + intfirstVLE +" and up to the upper bound defined as " + IntVLElastIndex;
+					toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring;
+				}
+			}
+			
+		}
+// Right left Class Tooltips 	
+	if (VRE.length() == 1) {
+		
+		if (VRE.equals("*")) {
+			RLBCadChar =  FirstClassName + " has " +  SecondClassName + ". It can have none, and there is no upper bound defined. ";
+			toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring + "  " + RLBCadChar;
+		} else
+			{Integer IntVRE = Integer.valueOf(VRE);
+			if (IntVRE >= 1 ) {
+				RLBCadChar = FirstClassName + " has " + SecondClassName + " .It must always have exactly " + IntVRE + ", and can never have none.";
+				toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring + "  " + RLBCadChar;
+			}
+			
+		}
+	} else {
+		char firstVRE = VRE.charAt(0);
+		int intfirstVRE = Character.getNumericValue(firstVRE);
+		if (intfirstVRE == 0) {	
+			RLBCadChar =   FirstClassName +  " has zero or one " +  SecondClassName + ". It may have none or exactly one. ";
+			toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring + "  " + RLBCadChar;
+		} else if (intfirstVRE >= 1) {
+			RLBCadChar =   FirstClassName +  " has " +  SecondClassName + ". It must always have exactly " + intfirstVRE + ", and can never have none. ";
+			toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring + "  " + RLBCadChar;
+		}		
+		
+		if (VRE.endsWith("*")) {
+			RLBCadChar =  FirstClassName+  " has " +  SecondClassName + ". It can have none, and there is no upper bound defined.";
+			toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring + "  " + RLBCadChar;
+		} else {
+			Integer IntVRElastIndex = Integer.valueOf(VRE.substring(VRE.length()-1) );
+			if (IntVRElastIndex >=1) {
+				RLBCadChar =  FirstClassName +  " has "+  SecondClassName + ", It can have "+  intfirstVRE + " and up to the upper bound defined as " + IntVRElastIndex;
+				toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName() + "  " + LUBCadstring + "  " + RLBCadChar;
+				
+			}
+		}
+		
+	}
+
+	}
+    // insertion ends here     
+        //toolTip = leftEnd.getClassName() + " " + visualLeftEnd + " " + arrows[1] + " " + visualRightEnd + " " + rightEnd.getClassName();
+          //toolTip = "leftEnd.getClassName" + leftEnd.getClassName() + " " + "visualLeftEnd" + visualLeftEnd +
+            //" " + "arrows" + arrows[1] + " " + "visualRightEnd" + visualRightEnd + " " + "rightEnd.getClassName" + rightEnd.getClassName();
         associations.append(twoLabelAssociation(leftEnd.getClassName(),
           rightEnd.getClassName(), arrows[0], visualRightEnd, visualLeftEnd, toolTip));
       }
