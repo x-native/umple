@@ -326,11 +326,28 @@ class RuleBasedParser
       analyzer.init(file, linkedFiles);
     }
     analyzer.execute();
+//
+
+    cleanSemicolon(analyzer.getRootToken());
     setRootToken(analyzer.getRootToken());
     setParseResult(analyzer.getParseResult());
     return getParseResult();
   }
   
+
+  private void cleanSemicolon(Token token)
+  {
+    for(Token subtoken : token.getSubTokens())
+    {
+      if(subtoken.getValue() != null)
+      {
+        if(subtoken.getValue().contains("$_UMPLE_SEMICOLON_REFERENCE_$"))
+          subtoken.setValue(subtoken.getValue().replace("$_UMPLE_SEMICOLON_REFERENCE_$",";")); //original replace(";", "$_UMPLE_SEMICOLON_REFERENCE_$");
+      } 
+      //
+      cleanSemicolon(subtoken);
+    }
+  }
   /*
    * Takes a file and parses it, returning the ParseResult
    * 
@@ -588,8 +605,7 @@ class ParserDataPackage
         line = reader.readLine();
       }
       input = input2.toString();
-/*
-      //replace semicolons with 
+      //replace semicolons with $_UMPLE_SEMICOLON_REFERENCE_$
       if(file.endsWith(".ump")); /
       {
         Pattern patternToMatch = Pattern.compile("\"(.+)?\\;\"");
@@ -602,7 +618,7 @@ class ParserDataPackage
           }
       }
 //end
-*/ 
+
     }
     catch(NullPointerException n)
     {
