@@ -608,7 +608,7 @@ class ParserDataPackage
       //replace semicolons with $_UMPLE_SEMICOLON_REFERENCE_$
       if(file.endsWith(".ump")); 
       {
-        Pattern patternToMatch = Pattern.compile("\"(.+)?\\;(.+)?\"");
+        Pattern patternToMatch = Pattern.compile("\"[^\"]+\""); //match any quoted values;
         Matcher matcher = patternToMatch.matcher(input);
           while (matcher.find()) {
             int start = matcher.start();
