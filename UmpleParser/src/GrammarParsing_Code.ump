@@ -331,24 +331,12 @@ class RuleBasedParser
     Token rootToken = analyzer.getRootToken();
     setRootToken(analyzer.getRootToken());
     setParseResult(analyzer.getParseResult());
-    cleanSemicolon(rootToken);
+//    cleanSemicolon(rootToken);
     return getParseResult();
   }
   
 
-  private void cleanSemicolon(Token token)
-  {
-    for(Token subtoken : token.getSubTokens())
-    {
-      if(subtoken.getValue() != null)
-      {
-        if(subtoken.getValue().contains("__UMPLE_SEMICOLON_REFERENCE__"))
-          subtoken.setValue(subtoken.getValue().replace("__UMPLE_SEMICOLON_REFERENCE__",";")); //original replace(";", "$_UMPLE_SEMICOLON_REFERENCE_$");
-      } 
-      //
-      cleanSemicolon(subtoken);
-    }
-  }
+
   /*
    * Takes a file and parses it, returning the ParseResult
    * 
@@ -568,8 +556,8 @@ class RuleBasedParser
 
 class ParserDataPackage
 {
-  depend java.util.regex.Matcher;
-  depend java.util.regex.Pattern;
+//  depend java.util.regex.Matcher;
+//  depend java.util.regex.Pattern;
   /*
     The passed Position can be null if this method was not invoked using a useStatement.
     It takes a file and reads it, it also initializes the couples which will be used for this file.
@@ -606,22 +594,7 @@ class ParserDataPackage
         line = reader.readLine();
       }
       input = input2.toString();
-      //replace semicolons with $_UMPLE_SEMICOLON_REFERENCE_$
-      if(file.endsWith(".ump")); 
-      {
-        Pattern patternToMatch = Pattern.compile("\"[^\"]+\""); //match any quoted values;
-        Matcher matcher = patternToMatch.matcher(input);
-          while (matcher.find()) {
-            int start = matcher.start();
-            int end = matcher.end();
-            if(matcher.group().contains(";"))
-            {
-              String fragment = matcher.group().replace(";", "__UMPLE_SEMICOLON_REFERENCE__");
-              input = input.substring(0,start) + fragment + input.substring(end);
-            }
-          }
-      }
-//end
+
 
     }
     catch(NullPointerException n)

@@ -1,5 +1,7 @@
 class ChoiceRule 
 {
+  depend java.util.regex.Matcher;
+  depend java.util.regex.Pattern;
   /*
     For ease of use the ... is used here to help the user to input sub rules
   */
@@ -110,7 +112,7 @@ class ChoiceRule
     Adds the self token to the parent token with the proper positions set for the self token.
   */
   public void addToken(Token parent, Token self, int from, int end, ParserDataPackage data)
-  {
+  {cleanSemicolon(parent);
     parent.addSubToken(self);
     
     self.setPosition(findPosition(from,data));
@@ -163,6 +165,8 @@ class ChoiceRule
   */
   public void addAllTokens(Token token, Token self)
   {
+cleanSemicolon(token);
+cleanSemicolon(self);
     for(int i=0;i<self.numberOfSubTokens();)
     {
       Token aSubToken = self.getSubToken(i);
@@ -170,6 +174,21 @@ class ChoiceRule
       token.addSubToken(aSubToken);
     }
   }
+
+  private void cleanSemicolon(Token token)
+  {
+    for(Token subtoken : token.getSubTokens())
+    {
+      if(subtoken.getValue() != null)
+      {
+        if(subtoken.getValue().contains("__UMPLE_SEMICOLON_REFERENCE__"))
+          subtoken.setValue(subtoken.getValue().replace("__UMPLE_SEMICOLON_REFERENCE__",";")); //original replace(";", "$_UMPLE_SEMICOLON_REFERENCE_$");
+      } 
+      //
+      cleanSemicolon(subtoken);
+    }
+  }
+
   /*
     Tries to parse, if successful, will add a new Token to the token Token (if this rule is not negated). Returns the position where the parser
     was able to get to. So, if the parse started at 9 and parsed the word "word" it would then be at 13 and would return that value.
@@ -183,10 +202,28 @@ class ChoiceRule
     }
     Token self = new Token(getName(),"START_TOKEN");
     for(int i=0;i<size();i++)
-    {
+    { 
+      //replace semicolons with $_UMPLE_SEMICOLON_REFERENCE_$
+      if(data.getFilename().endsWith(".ump")); 
+      {
+        Pattern patternToMatch = Pattern.compile("\"[^\"]+\""); //match any quoted values;
+        Matcher matcher = patternToMatch.matcher(input);
+          while (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            if(matcher.group().contains(";"))
+            {
+              String fragment = matcher.group().replace(";", "__UMPLE_SEMICOLON_REFERENCE__");
+              input = input.substring(0,start) + fragment + input.substring(end);
+            }
+          }
+      }
+//end
       int parseResult = get(i).parse(self,from,max, input, data);
       if(parseResult!=-1)
       {
+cleanSemicolon(token);
+cleanSemicolon(self);
         if(!getNegate()&&from!=max)
         {
           addToken(token,self,from,parseResult,data);
