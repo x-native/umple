@@ -328,9 +328,10 @@ class RuleBasedParser
     analyzer.execute();
 //
 
-    cleanSemicolon(analyzer.getRootToken());
+    Token rootToken = analyzer.getRootToken();
     setRootToken(analyzer.getRootToken());
     setParseResult(analyzer.getParseResult());
+    cleanSemicolon(rootToken);
     return getParseResult();
   }
   
@@ -341,8 +342,8 @@ class RuleBasedParser
     {
       if(subtoken.getValue() != null)
       {
-        if(subtoken.getValue().contains("$_UMPLE_SEMICOLON_REFERENCE_$"))
-          subtoken.setValue(subtoken.getValue().replace("$_UMPLE_SEMICOLON_REFERENCE_$",";")); //original replace(";", "$_UMPLE_SEMICOLON_REFERENCE_$");
+        if(subtoken.getValue().contains("__UMPLE_SEMICOLON_REFERENCE__"))
+          subtoken.setValue(subtoken.getValue().replace("__UMPLE_SEMICOLON_REFERENCE__",";")); //original replace(";", "$_UMPLE_SEMICOLON_REFERENCE_$");
       } 
       //
       cleanSemicolon(subtoken);
@@ -613,8 +614,11 @@ class ParserDataPackage
           while (matcher.find()) {
             int start = matcher.start();
             int end = matcher.end();
-            String fragmnet = matcher.group().replace(";", "$_UMPLE_SEMICOLON_REFERENCE_$");
-            input = input.substring(0,start) + fragmnet + input.substring(end);
+            if(matcher.group().contains(";"))
+            {
+              String fragment = matcher.group().replace(";", "__UMPLE_SEMICOLON_REFERENCE__");
+              input = input.substring(0,start) + fragment + input.substring(end);
+            }
           }
       }
 //end
