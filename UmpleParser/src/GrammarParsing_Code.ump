@@ -593,9 +593,9 @@ class ParserDataPackage
         input2.append(line+"\n");
         line = reader.readLine();
       }
-
+      input = input2.toString();
     //replace semicolons with $_UMPLE_SEMICOLON_REFERENCE_$
-      if(file.endsWith(".ump")); 
+      if(file.endsWith(".ump") && file.endsWith("ParsingRule_Code.ump")); 
       {
         Pattern patternToMatch = Pattern.compile("\"[^\"]+\""); //match any quoted values;
         Matcher matcher = patternToMatch.matcher(input);
@@ -610,7 +610,7 @@ class ParserDataPackage
           }
       }
 //end
-      input = input2.toString();
+     // input = input2.toString();
 
 
     }
