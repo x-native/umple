@@ -165,8 +165,8 @@ class ChoiceRule
   */
   public void addAllTokens(Token token, Token self)
   {
-cleanSemicolon(token);
-cleanSemicolon(self);
+   cleanSemicolon(token);
+   cleanSemicolon(self);
     for(int i=0;i<self.numberOfSubTokens();)
     {
       Token aSubToken = self.getSubToken(i);
@@ -181,8 +181,8 @@ cleanSemicolon(self);
     {
       if(subtoken.getValue() != null)
       {
-        if(subtoken.getValue().contains("__UMPLE_SEMICOLON_REFERENCE__"))
-          subtoken.setValue(subtoken.getValue().replace("__UMPLE_SEMICOLON_REFERENCE__",";")); //original replace(";", "$_UMPLE_SEMICOLON_REFERENCE_$");
+        if(subtoken.getValue().contains("_UMPLE_SEMICOLON_REFERENCE_"))
+          subtoken.setValue(subtoken.getValue().replace("_UMPLE_SEMICOLON_REFERENCE_",";")); //original replace(";", "$_UMPLE_SEMICOLON_REFERENCE_$");
       } 
       //
       cleanSemicolon(subtoken);
@@ -203,27 +203,11 @@ cleanSemicolon(self);
     Token self = new Token(getName(),"START_TOKEN");
     for(int i=0;i<size();i++)
     { 
-      //replace semicolons with $_UMPLE_SEMICOLON_REFERENCE_$
-      if(data.getFilename().endsWith(".ump")); 
-      {
-        Pattern patternToMatch = Pattern.compile("\"[^\"]+\""); //match any quoted values;
-        Matcher matcher = patternToMatch.matcher(input);
-          while (matcher.find()) {
-            int start = matcher.start();
-            int end = matcher.end();
-            if(matcher.group().contains(";"))
-            {
-              String fragment = matcher.group().replace(";", "__UMPLE_SEMICOLON_REFERENCE__");
-              input = input.substring(0,start) + fragment + input.substring(end);
-            }
-          }
-      }
-//end
+  
       int parseResult = get(i).parse(self,from,max, input, data);
       if(parseResult!=-1)
       {
-cleanSemicolon(token);
-cleanSemicolon(self);
+
         if(!getNegate()&&from!=max)
         {
           addToken(token,self,from,parseResult,data);
@@ -237,6 +221,8 @@ cleanSemicolon(self);
         {
           action.onSuccess(getNegate()?token:self,data);
         }
+        cleanSemicolon(token);
+        cleanSemicolon(self);
         return parseResult;
       }
       self = new Token(getName(),"START_TOKEN");
